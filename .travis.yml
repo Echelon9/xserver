@@ -1,0 +1,75 @@
+language: c
+
+sudo: true
+dist: trusty
+
+cache:
+  directories:
+    - $HOME/.ccache
+
+addons:
+  apt:
+    packages:
+      - libdbus-1-dev
+      - libdmx-dev
+      - libdrm-dev
+      - libudev-dev
+      - libexpat1-dev
+      - libepoxy-dev
+      - libfontenc-dev
+      - libpciaccess-dev
+      - libselinux1-dev
+      - libunwind8-dev
+      - libxau-dev
+      - libxdmcp-dev
+      - libxext-dev
+      - libxfixes-dev
+      - libxi-dev
+      - libxkbfile-dev
+      - libxrender-dev
+      - libxtst-dev
+      - x11proto-bigreqs-dev
+      - x11proto-damage-dev
+      - x11proto-dmx-dev
+      - x11proto-gl-dev
+      - x11proto-fixes-dev
+      - x11proto-fonts-dev
+      - x11proto-input-dev
+      - x11proto-randr-dev
+      - x11proto-record-dev
+      - x11proto-render-dev
+      - x11proto-resource-dev
+      - x11proto-scrnsaver-dev
+      - x11proto-video-dev
+      - x11proto-xcmisc-dev
+      - x11proto-xf86dga-dev
+      - x11proto-xf86dri-dev
+      - x11proto-xf86vidmode-dev
+      - x11proto-xinerama-dev
+
+env:
+  global:
+    - PREFIX=$HOME/prefix
+    - PKG_CONFIG_PATH=$HOME/prefix/lib/pkgconfig
+    - ACLOCAL="aclocal -I $PREFIX/share/aclocal"
+    - XFAIL_TESTS=xtest
+    - PIGLIT_DIR=$TRAVIS_BUILD_DIR/piglit
+    - XTEST_DIR=$TRAVIS_BUILD_DIR/xtest
+
+install:
+  - pip install mako
+  - export PATH="/usr/lib/ccache:$PATH"
+
+  # Prefer to use any libraries and programs we build over the OS versions.
+  - export PATH="$PREFIX/bin:$PATH"
+  - export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
+
+  - ./test/scripts/build-travis-deps.sh
+
+# Test
+
+script:
+  - ./autogen.sh
+  - make install
+  - make check
+  - ./test/scripts/xvfb-piglit.sh
