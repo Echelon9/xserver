@@ -1,4 +1,4 @@
-language: c
+language: cpp
 
 sudo: true
 dist: trusty
@@ -46,6 +46,10 @@ addons:
       - x11proto-xf86dri-dev
       - x11proto-xf86vidmode-dev
       - x11proto-xinerama-dev
+
+compiler:
+  - gcc
+  - clang
 
 env:
   global:
