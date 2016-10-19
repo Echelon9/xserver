@@ -59,6 +59,10 @@ MESACONF="$MESACONF --with-egl-platforms=x11,drm"
 MESACONF="$MESACONF --disable-gallium-llvm"
 $BUILDSH -o mesa/mesa --confflags "$MESACONF"
 
+# Build libepoxy master
+git clone https://github.com/anholt/libepoxy
+(cd libepoxy && ./autogen.sh --prefix="$PREFIX" && make && make install)
+
 # Build the X Test suite
 git clone git://anongit.freedesktop.org/git/xorg/test/xts
 (cd xts && ./autogen.sh && make)

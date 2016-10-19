@@ -15,7 +15,6 @@ addons:
       - libdrm-dev
       - libudev-dev
       - libexpat1-dev
-      - libepoxy-dev
       - libfontenc-dev
       - libpciaccess-dev
       - libselinux1-dev
