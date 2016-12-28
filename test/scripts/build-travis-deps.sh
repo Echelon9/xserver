@@ -57,7 +57,7 @@ MESACONF="$MESACONF --with-dri-drivers="
 MESACONF="$MESACONF --with-gallium-drivers=swrast"
 MESACONF="$MESACONF --with-egl-platforms=x11,drm"
 MESACONF="$MESACONF --disable-gallium-llvm"
-$BUILDSH -o mesa/mesa --confflags "$MESACONF"
+LLVM_CONFIG=no $BUILDSH -o mesa/mesa --confflags "$MESACONF"
 
 # Build the X Test suite
 git clone git://anongit.freedesktop.org/git/xorg/test/xts
