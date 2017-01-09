@@ -74,6 +74,7 @@ install:
 
 script:
   - ./autogen.sh
-  - make install
+  - make
+  - sudo make install
   - make check
   - ./test/scripts/xvfb-piglit.sh
